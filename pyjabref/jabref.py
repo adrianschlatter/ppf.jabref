@@ -31,7 +31,7 @@ def citationkey2counter(citationkey):
 
     # Then, add position of citationkey within keys of length n:
     for i, c in enumerate(citationkey[::-1]):
-        digit = ord(c) - ord('A')
+        digit = ord(c) - ord('a')
         counter += digit * 26 ** i
 
     return counter
@@ -51,7 +51,7 @@ def counter2citationkey(counter):
     for i in range(n)[::-1]:
         digit = counter // 26 ** i
         counter = counter % 26 ** i
-        citationkey[-i - 1] = chr(digit + ord('A'))
+        citationkey[-i - 1] = chr(digit + ord('a'))
 
     return ''.join(citationkey)
 
