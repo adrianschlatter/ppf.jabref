@@ -125,7 +125,7 @@ class Link():
         """Escape string s."""
         escaped = re.sub(':', r'\:', s)
         escaped = re.sub(';', r'\;', escaped)
-        escaped = re.sub('\\', r'\\', escaped)
+        escaped = re.sub(r'\\', r'\\\\', escaped)
         return escaped
 
     @staticmethod
