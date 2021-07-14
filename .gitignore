@@ -22,3 +22,7 @@ __pycache__/
 
 # sqlalchemy demo files:
 jabref-sqlalchemy*
+
+# other
+bug_reports/
+experimental/
