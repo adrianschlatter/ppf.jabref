@@ -65,8 +65,9 @@ class Entry(Base):
     shared_id = Column('SHARED_ID', Integer, primary_key=True)
     type = Column(VARCHAR(255), nullable=False)
     version = Column(Integer, nullable=True)
-    _fields = relationship('Field',
-                           collection_class=attribute_mapped_collection('name'))
+    _fields = relationship(
+        'Field',
+        collection_class=attribute_mapped_collection('name'))
 
     # Access like entry.fields['author'] returns 'A. Muller'
     # which is nicer than using enttry.fields['author'].value:
