@@ -90,6 +90,7 @@ class Field(Base):
 def split_by_unescaped_sep(text, sep=':'):
     """Split string at sep but only if not escaped."""
     def remerge(s):
+        # s is a list of strings.
         for i in range(len(s) - 1):
             n_esc = len(s[i]) - len(s[i].rstrip('\\'))
             if n_esc % 2 == 0:
@@ -99,10 +100,12 @@ def split_by_unescaped_sep(text, sep=':'):
                 return remerge(new_s)
         return s
 
+    # split by every sep (even unescaped ones)
+    # then re-merge strings that end in an uneven number of escape chars:
     return remerge(text.split(sep))
 
 
-@export
+@ export
 class Link():
     """A JabRef link as used to link to files and URLs."""
 
@@ -114,25 +117,63 @@ class Link():
         return ':'.join([Link.escape(s)
                          for s in [self.name, self.path, self.filetype]])
 
-    @classmethod
+    @ classmethod
     def from_string(cls, string):
         """Alternative constructor to create Link from JabRef link string."""
         name, path, filetype = [cls.unescape(part) for part
                                 in split_by_unescaped_sep(string, sep=':')]
         return cls(name, path, filetype)
 
-    @staticmethod
+    @ staticmethod
     def escape(s):
         """Escape string s."""
-        escaped = re.sub(':', r'\:', s)
+        escaped = re.sub(r'\\', r'\\\\', s)
+        escaped = re.sub(':', r'\:', escaped)
         escaped = re.sub(';', r'\;', escaped)
-        escaped = re.sub(r'\\', r'\\\\', escaped)
         return escaped
 
-    @staticmethod
+    @ staticmethod
     def unescape(text):
-        """Unescape string s."""
-        text = re.sub(r'\\\\', r'\\', text)
+        r"""
+        Unescape string s.
+
+        Assumes that there are no unescaped \, ;, ; in s.
+        """
         text = re.sub(r'\\;', ';', text)
         text = re.sub(r'\\:', ':', text)
+        text = re.sub(r'\\\\', r'\\', text)
         return text
+
+
+@export
+class File():
+    r"""
+    Represent a JabRef File entry.
+
+    A JabRef File entry is a ;-separated list of links. Each link is
+    a :-separated list of name, path, and type. Each field is an escaped
+    string (escape char is \, chars that need escaping are :, ;, and \).
+
+    Example: 'Preface:Books\\Preface.pdf:PDF;Chapter 1:Books\\Chapter1.pdf:PDF'
+    """
+
+    def __init__(self, list_of_links):
+        for link in list_of_links:
+            if type(link) is not Link:
+                raise TypeError(f'{link} is not a Link')
+        self._links = list_of_links
+
+    def __repr__(self):
+        return ';'.join([str(link) for link in self._links])
+
+    @classmethod
+    def from_string(cls, string):
+        """Create File from JabRef File entry."""
+        links = split_by_unescaped_sep(string, ';')
+        return cls([Link.from_string(link) for link in links])
+
+    def __getitem__(self, key):
+        return self._links[key]
+
+    def __len__(self):
+        return len(self._links)
