@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Unit test example
-
-All files in this directory named "test_*.py" are automatically identified
-as unittests by 'python setup.py test'.
+Test citationkey mapping Functions.
 """
 
 import unittest
