@@ -26,8 +26,10 @@ properties: name, path, and filetype. In the following example,
 entry_shared_id 2 has a single link with name='', path='a.pdf',
 filetype='PDF'.
 
+<p align="middle">
 <img alt="Excerpt from ENTRY table" src="imgs/entry_table.png" height="180">
 <img alt="Excerpt from FIELD table" src="imgs/field_table.png" height="180">
+</p>
 
 ## Using ppf.jabref
 
