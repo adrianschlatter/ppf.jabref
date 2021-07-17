@@ -41,4 +41,4 @@ The first 6 lines are setup code to import required packages and to set up
 the database connection. The query then uses ppf.jabref's Entry class to
 obtain all Entries (=references) in the JabRef database. The for-loop
 shows how to access fields and uses the File class to find out where the
-documets linked to this entry are stored.
+documents linked to this entry are stored.

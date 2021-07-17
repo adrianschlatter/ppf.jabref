@@ -26,8 +26,8 @@ properties: name, path, and filetype. In the following example,
 entry_shared_id 2 has a single link with name='', path='a.pdf',
 filetype='PDF'.
 
-<img alt="Excerpt from ENTRY table" src="imgs/entry_table.png" height="220">
-<img alt="Excerpt from FIELD table" src="imgs/field_table.png" height="220">
+<img alt="Excerpt from ENTRY table" src="imgs/entry_table.png" height="180">
+<img alt="Excerpt from FIELD table" src="imgs/field_table.png" height="180">
 
 ## Using ppf.jabref
 
@@ -39,28 +39,28 @@ A simple example that queries all entries and prints a selection of
 the fields looks like this:
 
 ```python
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import sessionmaker
-    from ppf.jabref import Entry, File
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from ppf.jabref import Entry, File
 
-    engine = create_engine('<your connection string here>', echo=False)
-    Session = sessionmaker(bind=engine)
-    session = Session()
+engine = create_engine('<your connection string here>', echo=False)
+Session = sessionmaker(bind=engine)
+session = Session()
 
-    q = session.query(Entry)
-    for entry in q:
-        print(entry.fields['author'], '\t',
-            entry.fields['title'], '\t',
-            entry.fields['year'], '\t', end='')
+q = session.query(Entry)
+for entry in q:
+    print(entry.fields['author'], '\t',
+        entry.fields['title'], '\t',
+        entry.fields['year'], '\t', end='')
 
-        files = File.from_string(entry.fields['file'])
-        for i in range(len(files)):
-            f = files[i]
-            print(f.path, '\t', end='')
+    files = File.from_string(entry.fields['file'])
+    for i in range(len(files)):
+        f = files[i]
+        print(f.path, '\t', end='')
 ```
 
 The first 6 lines are setup code to import required packages and to set up
 the database connection. The query then uses ppf.jabref's Entry class to
 obtain all Entries (=references) in the JabRef database. The for-loop
 shows how to access fields and uses the File class to find out where the
-documets linked to this entry are stored.
+documents linked to this entry are stored.
