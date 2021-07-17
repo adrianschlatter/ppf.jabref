@@ -20,8 +20,12 @@ __pycache__/
 # Mac OS
 .DS_Store
 
-# sqlalchemy demo files:
-jabref-sqlalchemy*
+# due to using coverage
+.coverage
+htmlcov/
+
+# due to vscode:
+.vscode/
 
 # other
 bug_reports/
