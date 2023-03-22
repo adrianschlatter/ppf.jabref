@@ -1,5 +1,5 @@
 """
-pyjabref
+ppf.jabref
 ++++++
 
 """
