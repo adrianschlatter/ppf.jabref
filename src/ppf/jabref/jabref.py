@@ -175,5 +175,18 @@ class File():
     def __getitem__(self, key):
         return self._links[key]
 
+    def __setitem__(self, key, link):
+        if not isinstance(link, Link):
+            raise TypeError(f'{link} is not a Link')
+        self._links[key] = link
+
     def __len__(self):
         return len(self._links)
+
+    def append(self, link):
+        if not isinstance(link, Link):
+            raise TypeError(f'{link} is not a Link')
+        self._links.append(link)
+
+    def pop(self, idx):
+        return self._links.pop(idx)
