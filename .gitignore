@@ -26,7 +26,3 @@ htmlcov/
 
 # due to vscode:
 .vscode/
-
-# other
-bug_reports/
-experimental/

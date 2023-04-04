@@ -40,7 +40,7 @@ def citationkey2counter(citationkey):
 @export
 def counter2citationkey(counter):
     n = 1
-    while(True):
+    while True:
         if counter < 26 ** n:
             break
 
