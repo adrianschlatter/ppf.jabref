@@ -4,13 +4,12 @@ on:
   pull_request:
 
 jobs:
-  build_and_test:
+  tox_on_ubuntu:
 
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: ["3.9"]
-        os: ["ubuntu", "macos", "windows"]
+        python: ["3.6", "3.11"]
 
     steps:
       - uses: actions/checkout@v3
