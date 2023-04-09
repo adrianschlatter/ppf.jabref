@@ -2,6 +2,7 @@ name: tox
 
 on:
   pull_request:
+  workflow_dispatch:  # you can trigger this workflow manually
 
 jobs:
   tox_on_ubuntu:
