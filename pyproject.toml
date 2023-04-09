@@ -3,3 +3,32 @@
 # https://pip.pypa.io/en/stable/reference/pip/#pep-517-and-518-support
 requires = ["setuptools>=40.8.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.pytest]
+testpaths = [
+    "tests"
+]
+
+[tool.flake8]
+per-file-ignores = [
+    # imported but unused, import *, undefined name:
+    "__init__.py: F401, F403, F821"
+]
+exclude = [
+    ".svn",
+    "CVS",
+    ".bzr",
+    ".hg",
+    ".git",
+    "__pycache__",
+    ".tox",
+    "experimental"
+]
+
+[tool.check-manifest]
+ignore = [
+    "tox.ini",
+    "tests",
+    "tests/**",
+    "docs/**"
+]
