@@ -8,7 +8,7 @@ from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, VARCHAR, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm.collections import attribute_mapped_collection
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.ext.associationproxy import association_proxy
 import re
 from .utils import export
