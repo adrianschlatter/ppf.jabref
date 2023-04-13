@@ -1,5 +1,7 @@
 # ppf.jabref
 
+<img alt="pypi downloads/month" src="https://img.shields.io/pypi/dm/ppf.jabref.svg">
+
 ppf.jabref provides a [python](https://www.python.org) interface to
 [JabRef](https://www.jabref.org) SQL databases. It maps database relations
 to python classes using [SQLAlchemy](https://www.sqlalchemy.org).
