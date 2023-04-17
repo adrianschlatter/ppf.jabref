@@ -19,9 +19,11 @@ Base = declarative_base()
 
 @export
 def citationkey2counter(citationkey):
-    # 'a': 0, 'b': 1, ..., 'z': 25
-    # 'aa': 26, 'ab': 27
-    # 'aaa': 26 + 26**2 + 0, 'aab': 26 + 26**2 + 1
+    """
+    'a': 0, 'b': 1, ..., 'z': 25
+    'aa': 26, 'ab': 27
+    'aaa': 26 + 26**2 + 0, 'aab': 26 + 26**2 + 1
+    """
 
     # Let n = len(citationkey).
     # Then first count all keys used by keys of length <n:
@@ -39,6 +41,12 @@ def citationkey2counter(citationkey):
 
 @export
 def counter2citationkey(counter):
+    """
+    'a': 0, 'b': 1, ..., 'z': 25
+    'aa': 26, 'ab': 27
+    'aaa': 26 + 26**2 + 0, 'aab': 26 + 26**2 + 1
+    """
+    
     n = 1
     while True:
         if counter < 26 ** n:
@@ -184,9 +192,11 @@ class File():
         return len(self._links)
 
     def append(self, link):
+        """Append link to File entry."""
         if not isinstance(link, Link):
             raise TypeError(f'{link} is not a Link')
         self._links.append(link)
 
     def pop(self, idx):
+        """Pop link from File entry."""
         return self._links.pop(idx)
