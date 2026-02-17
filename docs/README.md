@@ -100,5 +100,6 @@ everyone to adhere to it, just make sure you do as well.
 
 ## Change Log
 
+* 0.1.2: Fix problem with versioning
 * 0.1.1: Fix sqlalchemy deprecation warning, docstrings
 * 0.1.0: Initial release
