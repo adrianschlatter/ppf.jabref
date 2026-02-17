@@ -113,7 +113,7 @@ def split_by_unescaped_sep(text, sep=':'):
     return remerge(text.split(sep))
 
 
-@ export
+@export
 class Link():
     """A JabRef link as used to link to files and URLs."""
 
@@ -125,14 +125,14 @@ class Link():
         return ':'.join([Link.escape(s)
                          for s in [self.name, self.path, self.filetype]])
 
-    @ classmethod
+    @classmethod
     def from_string(cls, string):
         """Alternative constructor to create Link from JabRef link string."""
         name, path, filetype = [cls.unescape(part) for part
                                 in split_by_unescaped_sep(string, sep=':')]
         return cls(name, path, filetype)
 
-    @ staticmethod
+    @staticmethod
     def escape(s):
         """Escape string s."""
         escaped = re.sub(r'\\', r'\\\\', s)
@@ -140,7 +140,7 @@ class Link():
         escaped = re.sub(';', r'\;', escaped)
         return escaped
 
-    @ staticmethod
+    @staticmethod
     def unescape(text):
         r"""
         Unescape string s.

@@ -21,6 +21,11 @@ class Test_File(unittest.TestCase):
 
         self.assertTrue(file._links is list_of_links)
 
+    def test_File_init_rejects_non_links(self):
+        """Test File creation rejects non-Link entries."""
+        with self.assertRaises(TypeError):
+            dut.File([dut.Link('x', 'p', 'PDF'), 'not-a-link'])
+
     def test_Link_from_string(self):
         """Test Link creation from string."""
         string = 'Pref:Bks\\Chpt0.pdf:PDF;Chapter 1:Bks\\Chpt1.pdf:PDF'
@@ -32,6 +37,13 @@ class Test_File(unittest.TestCase):
         self.assertTrue(file._links[1].name == 'Chapter 1')
         self.assertTrue(file._links[1].path == 'Bks\\Chpt1.pdf')
         self.assertTrue(file._links[1].filetype == 'PDF')
+
+    def test_File_repr(self):
+        """Test File string representation."""
+        link1 = dut.Link(name='a', path='b:c', filetype='d')
+        link2 = dut.Link(name='e', path='f', filetype='g;h')
+        file = dut.File([link1, link2])
+        self.assertTrue(str(file) == r'a:b\:c:d;e:f:g\;h')
 
 
 class Test_File_List_Behavior(unittest.TestCase):
@@ -52,6 +64,19 @@ class Test_File_List_Behavior(unittest.TestCase):
         new_link = dut.Link('C', r'.\presentations\C.pptx', 'PPTX')
         self.file.append(new_link)
         self.assertTrue(len(self.file) == 3)
+
+    def test_append_rejects_non_link(self):
+        with self.assertRaises(TypeError):
+            self.file.append('not-a-link')
+
+    def test_setitem_rejects_non_link(self):
+        with self.assertRaises(TypeError):
+            self.file[0] = 'not-a-link'
+
+    def test_setitem(self):
+        new_link = dut.Link('C', 'docs/C.pdf', 'PDF')
+        self.file[1] = new_link
+        self.assertTrue(self.file[1] is new_link)
 
     def test_remove(self):
         original_link = self.list_of_links[0]
