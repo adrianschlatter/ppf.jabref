@@ -42,3 +42,18 @@ the database connection. The query then uses ppf.jabref's Entry class to
 obtain all Entries (=references) in the JabRef database. The for-loop
 shows how to access fields and uses the File class to find out where the
 documents linked to this entry are stored.
+
+
+## Installation
+
+ppf.jabref is available via [pypi](https://pypi.org):
+
+```
+pip install ppf.jabref
+```
+
+
+## Change Log
+
+* 0.1.1: Fix sqlalchemy deprecation warning, docstrings
+* 0.1.0: Initial release
