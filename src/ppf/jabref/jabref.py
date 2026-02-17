@@ -8,7 +8,7 @@ from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, VARCHAR, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm.collections import attribute_mapped_collection
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.ext.associationproxy import association_proxy
 import re
 from .utils import export
@@ -19,9 +19,11 @@ Base = declarative_base()
 
 @export
 def citationkey2counter(citationkey):
-    # 'a': 0, 'b': 1, ..., 'z': 25
-    # 'aa': 26, 'ab': 27
-    # 'aaa': 26 + 26**2 + 0, 'aab': 26 + 26**2 + 1
+    """
+    'a': 0, 'b': 1, ..., 'z': 25
+    'aa': 26, 'ab': 27
+    'aaa': 26 + 26**2 + 0, 'aab': 26 + 26**2 + 1
+    """
 
     # Let n = len(citationkey).
     # Then first count all keys used by keys of length <n:
@@ -39,8 +41,14 @@ def citationkey2counter(citationkey):
 
 @export
 def counter2citationkey(counter):
+    """
+    'a': 0, 'b': 1, ..., 'z': 25
+    'aa': 26, 'ab': 27
+    'aaa': 26 + 26**2 + 0, 'aab': 26 + 26**2 + 1
+    """
+
     n = 1
-    while(True):
+    while True:
         if counter < 26 ** n:
             break
 
@@ -105,7 +113,7 @@ def split_by_unescaped_sep(text, sep=':'):
     return remerge(text.split(sep))
 
 
-@ export
+@export
 class Link():
     """A JabRef link as used to link to files and URLs."""
 
@@ -117,14 +125,14 @@ class Link():
         return ':'.join([Link.escape(s)
                          for s in [self.name, self.path, self.filetype]])
 
-    @ classmethod
+    @classmethod
     def from_string(cls, string):
         """Alternative constructor to create Link from JabRef link string."""
         name, path, filetype = [cls.unescape(part) for part
                                 in split_by_unescaped_sep(string, sep=':')]
         return cls(name, path, filetype)
 
-    @ staticmethod
+    @staticmethod
     def escape(s):
         """Escape string s."""
         escaped = re.sub(r'\\', r'\\\\', s)
@@ -132,7 +140,7 @@ class Link():
         escaped = re.sub(';', r'\;', escaped)
         return escaped
 
-    @ staticmethod
+    @staticmethod
     def unescape(text):
         r"""
         Unescape string s.
@@ -175,5 +183,20 @@ class File():
     def __getitem__(self, key):
         return self._links[key]
 
+    def __setitem__(self, key, link):
+        if not isinstance(link, Link):
+            raise TypeError(f'{link} is not a Link')
+        self._links[key] = link
+
     def __len__(self):
         return len(self._links)
+
+    def append(self, link):
+        """Append link to File entry."""
+        if not isinstance(link, Link):
+            raise TypeError(f'{link} is not a Link')
+        self._links.append(link)
+
+    def pop(self, idx):
+        """Pop link from File entry."""
+        return self._links.pop(idx)

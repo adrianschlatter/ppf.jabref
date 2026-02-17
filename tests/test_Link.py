@@ -28,6 +28,20 @@ class Test_Link(unittest.TestCase):
         self.assertTrue(link.path == '/There/is/a/preface/somewhere.pdf')
         self.assertTrue(link.filetype == 'PDF')
 
+    def test_escape(self):
+        """Test Link.escape() for special characters."""
+        self.assertTrue(dut.Link.escape('a:b') == r'a\:b')
+        self.assertTrue(dut.Link.escape('a;b') == r'a\;b')
+        self.assertTrue(dut.Link.escape(r'a\b') == r'a\\b')
+        self.assertTrue(dut.Link.escape(r'a\:b') == r'a\\\:b')
+        self.assertTrue(dut.Link.escape(r'a\;b') == r'a\\\;b')
+        self.assertTrue(dut.Link.escape(r'a\:b\;c') == r'a\\\:b\\\;c')
+
+    def test_repr(self):
+        """Test Link string representation."""
+        link = dut.Link(name='A', path='B:C', filetype='D;E')
+        self.assertTrue(str(link) == r'A:B\:C:D\;E')
+
 
 if __name__ == '__main__':
     # This enables running the unit tests by running this script which is
