@@ -46,7 +46,7 @@ def counter2citationkey(counter):
     'aa': 26, 'ab': 27
     'aaa': 26 + 26**2 + 0, 'aab': 26 + 26**2 + 1
     """
-    
+
     n = 1
     while True:
         if counter < 26 ** n:
